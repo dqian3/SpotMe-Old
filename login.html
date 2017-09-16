@@ -20,7 +20,7 @@ firebase.initializeApp(config);
     var promise = firebase.auth().signInWithEmailAndPassword($("#email").val(), $("#pass").val());
 
     promise.then(function() {
-        window.location.href = "index.html";
+        window.location.href = "main.html";
     });
     promise.catch(function(error) {
       alert("Failed to login");

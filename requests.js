@@ -10,7 +10,9 @@ function register_customer(customer_info) {
 	    contentType:"application/json",
 	    success: function (data) {
 			store_cust_id(data["objectCreated"]["_id"]);
-
+		},
+		error: function (error) {
+			del_firebase_user();
 		}
     });
 }

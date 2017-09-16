@@ -24,6 +24,12 @@ function store_acc_id(id)
 	window.location.href = "main.html";
 }
 
+function del_firebase_user() {
+	var user = firebase.auth().currentUser;
+	firebase.database().ref('users/'+user.uid).remove();
+	user.delete();
+}
+
 function grabData()
 {
 	console.log($("#pass").val() + $("#confpass").val() +" " +$("#email").val())
