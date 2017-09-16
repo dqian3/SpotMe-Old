@@ -91,10 +91,11 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
         var destinationB = new google.maps.LatLng(lat2, uLng);
         var destinationIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=D|FF0000|000000';
+        //destinationIcon.addEventListener("click", function(){window.location.href="customer.html"});
         var originIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=O|FFFF00|000000';
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: uLat, lng: uLng},
+            center: origin1,
             zoom: 10
         });
         var geocoder = new google.maps.Geocoder;
@@ -120,22 +121,22 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
                     return function (results, status) {
                         if (status === 'OK') {
                             map.fitBounds(bounds.extend(results[0].geometry.location));
-                            /*var marker = new google.maps.Marker({
+                            var marker = new google.maps.Marker({
                                 map: map,
-                                position: results[0].getometry.location,
+                                position: results[0].geometry.location,
                                 icon: icon,
                                 //url: "customer.html"
                             });
                             google.maps.event.addListener(marker, 'click', function(){
-                                window.location.href=this.url;
+                                window.location.href="customer.html";
                             });
-                            markersArray.push(marker);*/
-                            markersArray.push(new google.maps.Marker({
+                            markersArray.push(marker);
+                            /*markersArray.push(new google.maps.Marker({
                                 map: map,
                                 position: results[0].geometry.location,
                                 icon: icon,
                                 url: "customer.html"
-                            }));
+                            }));*/
                         } else {
                             alert('Geocode was not successful due to: ' + status);
                         }
