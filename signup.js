@@ -15,7 +15,6 @@ function store_cust_id(id)
 
 	var userId = firebase.auth().currentUser.uid;
 	firebase.database().ref('users/' + userId + "/cust_id").set(id);
-
 }
 
 function store_acc_id(id)
@@ -50,4 +49,7 @@ function grabData()
 	});
 
 	register_customer(data);
+
+	window.location.href = "main.html";
+
 }
