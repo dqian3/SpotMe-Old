@@ -47,7 +47,8 @@ function grabData()
 			city: $("#city").val(),
 			state: $("#state").val(),
 			zip: $("#zip").val()
-		}
+		},
+		phonenumber: $("#phone").val()
 	};
 
 	firebase.auth().createUserWithEmailAndPassword($("#email").val(), $("#pass").val()).then(function() {

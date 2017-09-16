@@ -12,9 +12,9 @@ var config = {
 function store_order(order)
 {
 	var userId = firebase.auth().currentUser.uid;
-	firebase.database().ref('orders/' + order_info).set(order);
+	firebase.database().ref('orders/' + userId).set(order);
 	firebase.database().ref('users/' + userId + '/orderring').set(true);
-	window.location.href = "info_screen.html";
+	window.location.href = "info.html";
 }
 
 
