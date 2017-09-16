@@ -1,26 +1,87 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
-<script src="reports.js"></script>
-<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+<script src = "requests.js"> </script>
+<script src = "signup.js"> </script>
 
-<body>
-<form>
 
-<p> Best way to contact you? (Default: Email) </p>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
 
-<input type="radio" name="contact" value="phone" id="phone"> Phone <br>
-<input type="radio" name="contact" value="email" id="email"> Email <br>
+    <title>Bare - Start Bootstrap Template</title>
 
-<br>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-glyphs.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-<p> What was your issue? </p>
+    <!-- Custom styles for this template -->
+    <style>
+      body {
+        padding-top: 54px;
+      }
+      @media (min-width: 992px) {
+        body {
+          padding-top: 56px;
+        }
+      }
 
-<textarea rows = "4" cols = "50" id = "message"> </textarea>
+    </style>
+    <script>
+    function goBackToReceipt(){
+        window.location.href = "receipt.html";
+    }
+    </script>
+  </head>
+  <body style="background-color:white">
 
-<br>
-<p onclick="getReportInfo()">Submit</p>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
+      <div class="container">
+        <a class="navbar-brand" style="margin:0 auto;" href="#">Reporting</a>
+        <button class="navbar-toggler" onclick = "goBackToReceipt()"style="left:8px; top:12px; position: absolute; color:white; font-size:20px; border:0px"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
 
-</form>
-</body>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+          	<label for="">How should we contact you?</label>
+          </div><br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+          	<input type="radio" name="contact" class="form-control" value="phone" id="phone">Phone<br>
+          </div><br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+          	<input type="radio" name="contact" value="email" id="email">Email<br>
+          </div><br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+            <label for="message">What was your issue?</label>
+            <textarea class="form-control" rows="5" id="message"></textarea>
+          </div><br>
+
+          <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
+          <p><a class="btn btn-primary btn-lg" onclick="getReportInfo()" role="button" href="#" style="width:80%">Submit</a></p>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="reports.js"></script>
+  </body>
+
 </html>
-

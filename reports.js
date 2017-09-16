@@ -39,7 +39,9 @@ function fileReport(id_of_reported, id_of_reporter)
 				message: $("#message").val(),
 				preferred_method: preferred	
 			};
-	x.set( info	);
+	x.set( info	).then(function(){
+		console.log("success")
+	});
 	
 }
 
