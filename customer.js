@@ -16,7 +16,7 @@ var ETA = 5;
 
 firebase.database().ref('/users/' + destId).once('value').then(function(user) {
 	//Make this display properly instead of raw json.
-			console.log(JSON.stringify(user));
+	console.log(JSON.stringify(user));
 
 	$("#name").text(user.child("personal_info").val().first_name + " " + user.child("personal_info").val().last_name);
 
