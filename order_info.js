@@ -16,7 +16,7 @@ function store_order(order)
 	var promise = firebase.database().ref('orders/' + userId).set(order);
 
     promise.then(function() {
-    	var promise2 = firebase.database().ref('users/' + userId + '/orderring').set(true);
+    	var promise2 = firebase.database().ref('users/' + userId + '/ordering').set(true);
         promise2.then(function() {
         	
             window.location.href = "info.html";
