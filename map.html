@@ -65,7 +65,7 @@
     </div>
 </nav>
 
-<div  id="right-panel"style="display: none">
+<div  id="right-panel" style="display: none">
     <div id="inputs">
         <pre>
 var origin1=new google.maps.LatLng(uLat, uLng);
@@ -102,7 +102,6 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
                 console.log(user["location"]["lat"] + " " + user["location"]["long"]);
             }
         }
-        //add init map
         initMap();
 
     });
@@ -116,8 +115,6 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
     function displayLoc(lat, long) {
         uLat=lat;
         uLng=long;
-        console.log(uLat);
-        console.log(uLng);
     }
     function initMap() {
         var bounds = new google.maps.LatLngBounds;
@@ -130,9 +127,6 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
         for (var i=0;i<loc_array.length;i++){
             loc_array[i]=new google.maps.LatLng(loc_array[i][0], loc_array[i][1]);
         }
-        /*console.log("destinationA: ", destinationA);
-        console.log("destinationB: ", destinationB);*/
-        console.log("loc_array: ", JSON.stringify(loc_array));
         var destinationIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=D|FF0000|000000';
         //destinationIcon.addEventListener("click", function(){window.location.href="customer.html"});
