@@ -12,9 +12,23 @@ var config = {
 function store_order(order)
 {
 	var userId = firebase.auth().currentUser.uid;
-	firebase.database().ref('orders/' + userId).set(order);
-	firebase.database().ref('users/' + userId + '/orderring').set(true);
-	window.location.href = "info.html";
+	console.log(userId)
+	var promise = firebase.database().ref('orders/' + userId).set(order);
+
+    promise.then(function() {
+    	var promise2 = firebase.database().ref('users/' + userId + '/orderring').set(true);
+        promise2.then(function() {
+        	
+            window.location.href = "info.html";
+        });
+    });
+    promise.catch(function(error) {
+      alert("Failed");
+    });
+
+	
+	
+	
 }
 
 
@@ -22,7 +36,7 @@ function grabData()
 {
 	var order = {
 		amount_needed: $("#amt_needed").val(),
-		max_dist: $("#max_dist_away").val(),
+		max_eta: $("#max_eta_away").val(),
 		time: new Date(),
 		//location: 
 		started: false
