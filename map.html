@@ -109,8 +109,8 @@ var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
         service.getDistanceMatrix({
             origins: [origin1],
             destinations: [destinationA, destinationB],
-            travelMode: 'DRIVING',
-            unitSystem: google.maps.UnitSystem.METRIC,
+            travelMode: 'WALKING',
+            unitSystem: google.maps.UnitSystem.IMPERIAL,
             avoidHighways: false,
             avoidTolls: false
         }, function (response, status) {
