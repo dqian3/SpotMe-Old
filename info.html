@@ -98,7 +98,7 @@
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   
     <script src="jquery.slideunlock.js"></script>
-        <script>
+        <script>$("#pending").html(firebase.auth().currentUser.uid);
             $(function () {
                 var slider = new SliderUnlock("#slider", {}, function () {
                   //alert('unlocked');
