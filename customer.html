@@ -1,10 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
+  <head>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script src = "customer.js"> </script>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <title>Bare - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-glyphs.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <style>
+      body {
+        padding-top: 54px;
+      }
+      @media (min-width: 992px) {
+        body {
+          padding-top: 56px;
+        }
+      }
+<script>
+    document.ontouchmove = function(event){
+    event.preventDefault();
+}
+  </script>
+    </style>
+    <script>
+    function goToIndex(){
+        window.location.href = "main.html";
+    }
+    </script>
+
+  </head>
+  <body style="background-color:#ecf0f1">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
+      <div class="container">
+        <a class="navbar-brand" style="margin:0 auto;" href="#">Customer Info</a>
+        <button class="navbar-toggler" onclick = "goToIndex()"style="left:8px; top:12px; position: absolute; color:white; font-size:20px; border:0px"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+            <p class="personal_info">
+            Personal info
+            </p>
+          </div><br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" id="amt_needed" placeholder="Cash needed" aria-label="Amount (to the nearest dollar)" readonly>
+            <span class="input-group-addon">.00</span>
+          </div><br>
+          <div style="width: 80%; margin: 0 auto" class="input-group">
+            <input type="text" class="form-control" placeholder="Distance" id="dist" aria-describedby="basic-addon2" readonly>
+            <span class="input-group-addon">Minutes Away</span>
+          </div><br>
+          <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
+          <p><a class="btn btn-primary btn-lg" onclick="accept()" role="button" href="#" style="width:80%">Accept</a></p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+  </body>
+
 </html>
