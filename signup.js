@@ -2,14 +2,16 @@ function uploadData(cust_data)
 {
 	// Gives firebase all the data
 }
-function store_cust_id()
+function store_cust_id(id) 
 {
+	//store in firebase
+	create_account(id);
 
 }
 
-function store_acc_id()
+function store_acc_id(id)
 {
-
+	//store in firebase
 }
 
 function grabData()
@@ -26,6 +28,6 @@ function grabData()
 			zip: $("zip").val();
 		}
 	}
-
+	register_customer(data);
 	uploadData(data);
 }
