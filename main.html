@@ -65,7 +65,14 @@
         </div>
       </div>
     </nav>-->
-
+    <script>
+    function goToOrder(){
+        window.location.href = "order.html";
+    }
+    function goToMap(){
+        window.location.href = "map.html";
+    }
+    </script>
     <!-- Page Content -->
     <div style="position: absolute; top:20px; left:20px; color:#34495e; font-size:20px; border:0px">
       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -80,8 +87,8 @@
           <br>
           <br>
           <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
-          <p><a class="btn btn-primary btn-lg" href="#" role="button" style="width:80%">Spot Me Cash</a></p>
-          <p><a class="btn btn-primary btn-lg" href="map.html" role="button" style="width:80%">Give Money</a></p>
+          <p><a class="btn btn-primary btn-lg" href="#" onclick="goToOrder()" role="button" style="width:80%">Spot Me Cash</a></p>
+          <p><a class="btn btn-primary btn-lg" href="#" onclick="goToMap()" role="button" style="width:80%">Give Money</a></p>
         </div>
       </div>
     </div>
