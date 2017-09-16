@@ -13,8 +13,7 @@ var userType;
 firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    document.getElementById("pending").innerHTML = firebase.auth().currentUser.uid;
-	  //userStatus(user.uid);  // User is signed in.
+	  userStatus(user.uid);  // User is signed in.
   }
 });
 
