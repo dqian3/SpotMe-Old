@@ -80,7 +80,7 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
 </div>
 <div id="map"></div>
 
-<script src="Location.js"></script>
+
 <script>
     var config = {
         apiKey: "AIzaSyCUjMnWd8szLkDenWZV58BWfmRq0Sm7dMI",
@@ -93,18 +93,8 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
     firebase.initializeApp(config);
     var loc_array=[];
     var user_id_array=[];
-    firebase.database().ref("/orders/").once("value").then(function (snapshot){
-        for (var user_id in snapshot.val()) {
-            if (snapshot.val().hasOwnProperty(user_id)) {
-                var user = snapshot.val()[user_id];
-                loc_array.push([user["location"]["lat"],user["location"]["long"]]);
-                user_id_array.push(user_id);
-                console.log(user["location"]["lat"] + " " + user["location"]["long"]);
-            }
-        }
-        initMap();
+    console.log('fes')
 
-    });
 
 //    firebase.database().update()//or set
 
@@ -117,13 +107,28 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
         uLng=long;
     }
     function initMap() {
+        firebase.database().ref("/orders/").once("value").then(function (snapshot) {
+            console.log('li')
+            for (var user_id in snapshot.val()) {
+                if (snapshot.val().hasOwnProperty(user_id)) {
+                    var user = snapshot.val()[user_id];
+                    loc_array.push([user["location"]["lat"], user["location"]["long"]]);
+                    user_id_array.push(user_id);
+                    console.log(user["location"]["lat"] + " " + user["location"]["long"]);
+                }
+            }
+            moreMapInit()
+        });
+    }
+
+    function moreMapInit(){
         var bounds = new google.maps.LatLngBounds;
         origin1 = new google.maps.LatLng(uLat, uLng);
         console.log("origin1: ", origin1);
-        /*var lat1=uLat+0.006;
+        var lat1=uLat+0.006;
         var lat2=uLat-0.006;
         destinationA=new google.maps.LatLng(lat1, uLng);
-        destinationB=new google.maps.LatLng(lat2, uLng);*/
+        destinationB=new google.maps.LatLng(lat2, uLng);
         for (var i=0;i<loc_array.length;i++){
             loc_array[i]=new google.maps.LatLng(loc_array[i][0], loc_array[i][1]);
         }
@@ -136,30 +141,81 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
             center: origin1,
             zoom: 10
         });
+        var geocoder = new google.maps.Geocoder;
+        var service = new google.maps.DistanceMatrixService;
+        service.getDistanceMatrix({
+            origins: [origin1],
+            destinations: [destinationA, destinationB],
+            travelMode: 'WALKING',
+            unitSystem: google.maps.UnitSystem.IMPERIAL,
+            avoidHighways: false,
+            avoidTolls: false
+        }, function (response, status) {
+            if (status !== 'OK') {
+                alert('Error was: ' + status);
+            } else {
+                var originList = response.originAddresses;
+                var destinationList = response.destinationAddresses;
+                var outputDiv = document.getElementById('output');
+                outputDiv.innerHTML = '';
+                //deleteMarkers(markersArray);
+                var showGeocodedAddressOnMap = function (asDestination) {
+                    var icon = asDestination ? destinationIcon : originIcon;
+                    return function (results, status) {
+                        if (status === 'OK') {
+                            map.fitBounds(bounds.extend(results[0].geometry.location));
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: results[0].geometry.location,
+                                icon: icon,
+                            });
+                            google.maps.event.addListener(marker, 'click', function(){
+                                window.location.href="customer.html";
+                            });
+                            //markersArray.push(marker);
+                        } else {
+                            alert('Geocode was not successful due to: ' + status);
+                        }
+                    };
+                };
+                for (var i = 0; i < originList.length; i++) {
+                    var results = response.rows[i].elements;
+                    geocoder.geocode({'address': originList[i]},
+                        showGeocodedAddressOnMap(false));
+                    for (var j = 0; j < results.length; j++) {
+                        geocoder.geocode({'address': destinationList[j]},
+                            showGeocodedAddressOnMap(true));
+                        outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
+                            ': ' + results[j].distance.text + ' in ' +
+                            results[j].duration.text + '<br>';
+                    }
+                }
+                for (var i = 0; i < loc_array.length; i++) {
+                    console.log(user_id_array[i]);
+                    var marker = new google.maps.Marker({
+                        position: loc_array[i],
+                        map: map,
+                        user : user_id_array[i],
+                        icon: destinationIcon
+                    });
+                    marker.addListener('click', function(){
+                        console.log(JSON.stringify(this.position));
+                        console.log(this.user);
+                    });
+                }
 
-        for (var i = 0; i < loc_array.length; i++) {
-            console.log(user_id_array[i]);
-            var marker = new google.maps.Marker({
-                position: loc_array[i],
-                map: map,
-                user : user_id_array[i],
-                icon: destinationIcon
-            });
-            marker.addListener('click', function(){
-                console.log(JSON.stringify(this.position));
-                console.log(this.user);
-            });
-        }
-
-        var origin_marker = new google.maps.Marker({
-            icon: originIcon,
-            position: origin1,
-            map: map
+                var origin_marker = new google.maps.Marker({
+                    icon: originIcon,
+                    position: origin1,
+                    map: map
+                });
+            }
         });
-
     }
 
+
 </script>
+<script src="Location.js"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR8NLmWg6YsgLwOua4QE83DI1WqxmlH0M&callback=initMap">
 </script>
