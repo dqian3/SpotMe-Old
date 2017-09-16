@@ -30,7 +30,7 @@
         }
         #map {
             height: 100%;
-            width: 50%;
+            width: 100%;
         }
         #right-panel {
             float: right;
@@ -58,12 +58,12 @@
       </div>
     </nav>
 
-<div id="right-panel">
+<div  id="right-panel"style="display: none">
     <div id="inputs">
         <pre>
-var origin1=new google.maps.LatLng(uLng, uLat)
-var destinationA = 'Stockholm, Sweden';
-var destinationB = {lat: 50.087, lng: 14.421};
+var origin1=new google.maps.LatLng(uLat, uLng);
+var destinationA = new google.maps.LatLng(uLat+0.001, uLng);
+var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
         </pre>
     </div>
     <div>
@@ -89,10 +89,11 @@ var destinationB = {lat: 50.087, lng: 14.421};
     function initMap() {
         var bounds = new google.maps.LatLngBounds;
         var markersArray = [];
-
-        var origin1 = new google.maps.LatLng(uLat, uLng)
-        var destinationA = 'Stockholm, Sweden';
-        var destinationB = {lat: 50.087, lng: 14.421};
+        var origin1 = new google.maps.LatLng(uLat, uLng);
+        var lat1=uLat+0.006;
+        var lat2=uLat-0.006;
+        var destinationA = new google.maps.LatLng(lat1, uLng);
+        var destinationB = new google.maps.LatLng(lat2, uLng);
 
         var destinationIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=D|FF0000|000000';
