@@ -1,9 +1,7 @@
 var key = "b438629de3e45a73dfa48015313dc324";
 var baseurl = "http://api.reimaginebanking.com"
 
-function register_customer(customer_info) {
-	document.write(JSON.stringify(customer_info));
-	
+function register_customer(customer_info) {	
 	$.ajax({
 	    url: baseurl + "/customers?key=" + key,
 	    type: 'POST',
@@ -11,7 +9,7 @@ function register_customer(customer_info) {
 	    dataType: 'json',
 	    contentType:"application/json",
 	    success: function (data) {
-			store_cust_id(data);
+			store_cust_id(data["objectCreated"]["_id"]);
 
 		}
     });
@@ -34,7 +32,7 @@ function create_account(id) {
 	    dataType: 'json',
 	    contentType:"application/json",
 	    success: function (data) {
-			store_acc_id(data);
+			store_acc_id(data["objectCreated"]["_id"]);
 		}
     });
 

@@ -19,37 +19,54 @@ function store_cust_id(id)
 
 function store_acc_id(id)
 {
+	var userId = firebase.auth().currentUser.uid;
 	firebase.database().ref('users/' + userId + "/acc_id").set(id);
 }
 
 function grabData()
 {
-	if ($("pass").val() != $("confpass").val()) {
+	console.log($("#pass").val() + $("#confpass").val() +" " +$("#email").val())
+	if ($("#pass").val() != $("#confpass").val()) {
 		alert("Passwords don't match");
 		return;
 	}
 	var data = {
-		first_name: $("fname").val();
-		last_name: $("lname").val();
+		first_name: $("#fname").val(),
+		last_name: $("#lname").val(),
 		address:
 		{
-			street_number: $("stnum").val();
-			street_name: $("stname").val();
-			city: $("city").val();
-			state: $("state").val();
-			zip: $("zip").val();
+			street_number: $("#stnum").val(),
+			street_name: $("#stname").val(),
+			city: $("#city").val(),
+			state: $("#state").val(),
+			zip: $("#zip").val()
 		}
-	}
+	};
 
-	firebase.auth().createUserWithEmailAndPassword($("email").val(), $("pass").val());
+	firebase.auth().createUserWithEmailAndPassword($("#email").val(), $("#pass").val()).then(function() {
+		var userId = firebase.auth().currentUser.uid;
+		firebase.database().ref('users/' + userId).set({
+			personal_info: data
+		});
 
-	var userId = firebase.auth().currentUser.uid;
-	firebase.database().ref('users/' + userId).set({
-		personal_info: data;
+		register_customer(data);
+
+		// window.location.href = "main.html";
 	});
+		// promise.then(function() {
+	// 	var userId = firebase.auth().currentUser.uid;
+	// 	firebase.database().ref('users/' + userId).set({
+	// 		personal_info: data
+	// 	});
 
-	register_customer(data);
+	// 	register_customer(data);
 
-	window.location.href = "main.html";
+	// 	window.location.href = "main.html";
+	// });
+	// promise.catch(function(then) {
+
+	// });
+
+
 
 }
