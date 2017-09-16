@@ -6,12 +6,17 @@ var config = {
     storageBucket: "spotme-a2502.appspot.com",
     messagingSenderId: "1041315357650"
   };
-  firebase.initializeApp(config);
+
+var userId;
 var userType;
 
-//var userId = -------- will be assigned somehow when we login
-var RecUserId= "4HRB2yLjjCbeeKQmMfodjIFSBc12";
-var DelUserId= "SwUOBxSqBqgyYH4znoH23BbE8px1";
+firebase.initializeApp(config);
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+	  userStatus(user.uid);  // User is signed in.
+  }
+});
+
 
 function getRecieverInfo(rId)
 {
@@ -22,80 +27,80 @@ function getRecieverInfo(rId)
   	var lname = snapshot.child("personal_info/last_name").val();
   	var phonenum = snapshot.child("personal_info/phonenumber").val();
 
-  	   console.log("#2  " + fname + '  ' + lname + "  " + phonenum);
+  	console.log("#2  " + fname +  " " + lname + "  " + phonenum);
 
-  	$("#CustomerInfor").html(fname + "\n" + lname + "\n" + phonenum);
-
-
-  	
+  	$("#name").html(fname + " " + lname); 
+  	$("#call").attr("href", "tel:"+phonenum);
+  	$("#text").attr("href", "sms:"+phonenum);
   });
-
 }
 
 function getDelivererInfo(dId)
 {
    console.log(dId);
-   firebase.database().ref('/users/' + dId).once("value").then(function(snapshot) 
-   {
+   firebase.database().ref('/users/' + dId).once("value").then(function(snapshot)  {
   		var fname = snapshot.child("personal_info/first_name").val();
   		var lname = snapshot.child("personal_info/last_name").val();
   		var phonenum = snapshot.child("personal_info/phonenumber").val();
   		
   	  	console.log("#1  " + fname + '  ' + lname + "  " + phonenum);
 
-  	$("#CustomerInfor").html(fname + "\n" + lname + "\n" + phonenum);
-
-
-  	
+	  	$("#name").html(fname + " " + lname); 
+	  	$("#call").attr("href", "tel:"+phonenum);
+	  	$("#text").attr("href", "sms:"+phonenum);
   	});
-
-
 }
 
 
-function userStatus()
-	{
-		//userId = firebase.auth().currentUser.uid;
-		//RecUserId will switch to userId when the code is implemented
-  		firebase.database().ref('/users/' + RecUserId).once("value").then(function(snapshot) {
+function userStatus(id) {
+	userId = id;
+	firebase.database().ref('/users/' + userId).once("value").then(function(snapshot) {
   		var ordering = snapshot.child("ordering").val();
-  		//console.log(userId);
-  		console.log(ordering);
-  		if (ordering === true) //////////////////this is supposed to be ordering === true
-			{
-				//on the money reciever's phone
-				//RecUser(in this case)
-				userType = "customer";
-				//Get deliverer's info
-				//RecUserId will switch to userId
-				firebase.database().ref('/orders/' + RecUserId).once("value").then(function(deliverer) {
-  					var delivererId = deliverer.val().deliverer;
-  					console.log(delivererId);
-  					getDelivererInfo(delivererId);
-  				});
-					
+   		console.log(ordering);
 
-			}
+  		if (ordering) {
+  			//on the money reciever's phone
+			$("#info").hide(); 
+			$("#pending").show();
+  			userType = "customer";
+
+  			firebase.database().ref('/orders/' + userId).on("value", function(order) {
+  				if(order.child("started").val()) {
+  					$("#info").show();
+  					$("#pending").hide();
+  					var delivererId = order.val().deliverer;
+					getDelivererInfo(delivererId);
+					firebase.database().ref('/orders/' + userId).off();
+  				}
+
+  			});
+
+		}
 		else
-			{
-				//on the deliverer's phone
-				//DelUser (in this case)
-				userType = "deliverer";
-				//Get reciever's info
-				//DelUserId will switch to userId
-				firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
-				//DelUserId will switch to userId
-  					var recieverID = deliverer.child(DelUserId).val();
-  					console.log(recieverID);
-  					getRecieverInfo(recieverID);
-  				});
+		{
+			$("#info").show();
+			$("#pending").hide();
 
-			}
+			//on the deliverer's phone
+			//DelUser (in this case)
+			userType = "deliverer";
+			//Get reciever's info
+			//DelUserId will switch to userId
+			firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
+			//DelUserId will switch to userId
+					var recieverID = deliverer.child(userId).val();
+					console.log("Receiver:" + recieverID);
+					getRecieverInfo(recieverID);
+			});;
+		}
   });
 }
 
-userStatus();
+function confirmedExchange() {
 
+
+
+}  
 
 
 
