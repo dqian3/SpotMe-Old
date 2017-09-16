@@ -11,15 +11,12 @@
             line-height: 30px;
             padding-left: 10px;
         }
-
         #right-panel select, #right-panel input {
             font-size: 15px;
         }
-
         #right-panel select {
             width: 100%;
         }
-
         #right-panel i {
             font-size: 12px;
         }
@@ -42,28 +39,28 @@
         }
     </style>
     <script>
-    function goToMain(){
-        window.location.href = "main.html";
-    }
+        function goToMain(){
+            window.location.href = "main.html";
+        }
     </script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
-      <div class="container">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
+    <div class="container">
         <a class="navbar-brand" style="margin:0 auto; padding-top:18px" href="#">Cash Requests</a>
         <button class="navbar-toggler" onclick = "goToMain()"style="left:8px; top:18px; position: absolute; color:white; font-size:20px; border:0px"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         </button>
-      </div>
-    </nav>
+    </div>
+</nav>
 
 <div  id="right-panel"style="display: none">
     <div id="inputs">
         <pre>
 var origin1=new google.maps.LatLng(uLat, uLng);
-var destinationA = new google.maps.LatLng(uLat+0.001, uLng);
-var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
+var destinationA = new google.maps.LatLng(uLat, uLng);
+var destinationB = new google.maps.LatLng(uLat, uLng);
         </pre>
     </div>
     <div>
@@ -92,7 +89,6 @@ var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
         var lat2=uLat-0.006;
         var destinationA = new google.maps.LatLng(lat1, uLng);
         var destinationB = new google.maps.LatLng(lat2, uLng);
-
         var destinationIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=D|FF0000|000000';
         var originIcon = 'https://chart.googleapis.com/chart?' +
@@ -102,7 +98,6 @@ var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
             zoom: 10
         });
         var geocoder = new google.maps.Geocoder;
-
         var service = new google.maps.DistanceMatrixService;
         service.getDistanceMatrix({
             origins: [origin1],
@@ -120,16 +115,26 @@ var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
                 var outputDiv = document.getElementById('output');
                 outputDiv.innerHTML = '';
                 deleteMarkers(markersArray);
-
                 var showGeocodedAddressOnMap = function (asDestination) {
                     var icon = asDestination ? destinationIcon : originIcon;
                     return function (results, status) {
                         if (status === 'OK') {
                             map.fitBounds(bounds.extend(results[0].geometry.location));
+                            /*var marker = new google.maps.Marker({
+                                map: map,
+                                position: results[0].getometry.location,
+                                icon: icon,
+                                //url: "customer.html"
+                            });
+                            google.maps.event.addListener(marker, 'click', function(){
+                                window.location.href=this.url;
+                            });
+                            markersArray.push(marker);*/
                             markersArray.push(new google.maps.Marker({
                                 map: map,
                                 position: results[0].geometry.location,
-                                icon: icon
+                                icon: icon,
+                                url: "customer.html"
                             }));
                         } else {
                             alert('Geocode was not successful due to: ' + status);
@@ -151,7 +156,6 @@ var destinationB = new google.maps.LatLng(uLat-0.001, uLng);
             }
         });
     }
-
     function deleteMarkers(markersArray) {
         for (var i = 0; i < markersArray.length; i++) {
             markersArray[i].setMap(null);
