@@ -125,18 +125,11 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
                                 map: map,
                                 position: results[0].geometry.location,
                                 icon: icon,
-                                //url: "customer.html"
                             });
                             google.maps.event.addListener(marker, 'click', function(){
                                 window.location.href="customer.html";
                             });
                             markersArray.push(marker);
-                            /*markersArray.push(new google.maps.Marker({
-                                map: map,
-                                position: results[0].geometry.location,
-                                icon: icon,
-                                url: "customer.html"
-                            }));*/
                         } else {
                             alert('Geocode was not successful due to: ' + status);
                         }
