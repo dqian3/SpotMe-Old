@@ -8,18 +8,21 @@ var config = {
   };
   firebase.initializeApp(config);
 var userType;
-var userId= "4HRB2yLjjCbeeKQmMfodjIFSBc12";
 
-function getRecieverInfo()
+//var userId = -------- will be assigned somehow when we login
+var RecUserId= "4HRB2yLjjCbeeKQmMfodjIFSBc12";
+var DelUserId= "SwUOBxSqBqgyYH4znoH23BbE8px1";
+
+function getRecieverInfo(rId)
 {
-   //userId = firebase.auth().currentUser.uid;
-   console.log (userId);
-   return firebase.database().ref('/users/' + userId).once("value").then(function(snapshot) {
+   console.log (rId);
+   firebase.database().ref('/users/' + rId).once("value").then(function(snapshot) 
+   {
   	var fname = snapshot.child("personal_info/first_name").val();
   	var lname = snapshot.child("personal_info/last_name").val();
   	var phonenum = snapshot.child("personal_info/phonenumber").val();
 
-  	   console.log("#1  " + fname + '  ' + lname + "  " + phonenum);
+  	   console.log("#2  " + fname + '  ' + lname + "  " + phonenum);
 
   	$("#CustomerInfor").html(fname + "\n" + lname + "\n" + phonenum);
 
@@ -29,15 +32,16 @@ function getRecieverInfo()
 
 }
 
-function getDelivererInfo(uId)
+function getDelivererInfo(dId)
 {
-   console.log(uId);
-   firebase.database().ref('/users/' + uId).once("value").then(function(snapshot) {
+   console.log(dId);
+   firebase.database().ref('/users/' + dId).once("value").then(function(snapshot) 
+   {
   		var fname = snapshot.child("personal_info/first_name").val();
   		var lname = snapshot.child("personal_info/last_name").val();
   		var phonenum = snapshot.child("personal_info/phonenumber").val();
   		
-  	  	 console.log("#1  " + fname + '  ' + lname + "  " + phonenum);
+  	  	console.log("#1  " + fname + '  ' + lname + "  " + phonenum);
 
   	$("#CustomerInfor").html(fname + "\n" + lname + "\n" + phonenum);
 
@@ -51,18 +55,20 @@ function getDelivererInfo(uId)
 
 function userStatus()
 	{
-		// userId = firebase.auth().currentUser.uid;
-  		firebase.database().ref('/users/' + userId).once("value").then(function(snapshot) {
+		//userId = firebase.auth().currentUser.uid;
+		//RecUserId will switch to userId when the code is implemented
+  		firebase.database().ref('/users/' + RecUserId).once("value").then(function(snapshot) {
   		var ordering = snapshot.child("ordering").val();
-  		console.log(userId);
+  		//console.log(userId);
   		console.log(ordering);
-  		if (ordering === true)
+  		if (ordering === true) //////////////////this is supposed to be ordering === true
 			{
 				//on the money reciever's phone
+				//RecUser(in this case)
 				userType = "customer";
-				var deliverId = snapshot.child("deliverer").val();
 				//Get deliverer's info
-				firebase.database().ref('/orders/' + userId).once("value").then(function(deliverer) {
+				//RecUserId will switch to userId
+				firebase.database().ref('/orders/' + RecUserId).once("value").then(function(deliverer) {
   					var delivererId = deliverer.val().deliverer;
   					console.log(delivererId);
   					getDelivererInfo(delivererId);
@@ -73,7 +79,17 @@ function userStatus()
 		else
 			{
 				//on the deliverer's phone
+				//DelUser (in this case)
 				userType = "deliverer";
+				//Get reciever's info
+				//DelUserId will switch to userId
+				firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
+				//DelUserId will switch to userId
+  					var recieverID = deliverer.child(DelUserId).val();
+  					console.log(recieverID);
+  					getRecieverInfo(recieverID);
+  				});
+
 			}
   });
 }
