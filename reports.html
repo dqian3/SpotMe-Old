@@ -1,0 +1,26 @@
+<html>
+<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+<script src="reports.js"></script>
+<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+
+<body>
+<form>
+
+<p> Best way to contact you? (Default: Email) </p>
+
+<input type="radio" name="contact" value="phone" id="phone"> Phone <br>
+<input type="radio" name="contact" value="email" id="email"> Email <br>
+
+<br>
+
+<p> What was your issue? </p>
+
+<textarea rows = "4" cols = "50" id = "message"> </textarea>
+
+<br>
+<p onclick="getReportInfo()">Submit</p>
+
+</form>
+</body>
+</html>
+
