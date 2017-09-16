@@ -79,9 +79,11 @@ function getMyInfo(myId, customer)
       $(".deliverer").each(function() {
         $( this ).html(fname + " " + lname);
       }); 
+
     }
     
-    
+    $("#receiptcontainer").show();
+    $("#pending").hide();
   });
 }
 
