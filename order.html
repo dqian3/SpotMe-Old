@@ -71,7 +71,7 @@
             <span class="input-group-addon">minutes</span>
           </div><br>
           <div style="width: 80%; margin: 0 auto" class="input-group">
-            <input type="text" class="form-control" id="amt_needed" placeholder="My Location" aria-label="Amount (to the nearest dollar)">
+            <input type="text" class="form-control" id="amt_needed1" placeholder="My Location" aria-label="Amount (to the nearest dollar)">
           </div><br>
           <div style="width: 80%; text-align:center;margin: 0 auto" class="input-group">
             <a style="text-align:center; margin: 0 auto" href="#" onclick="currentLocation()">Current Location</a>
@@ -84,8 +84,36 @@
         </div>
       </div>
     </div>
+    <script>
+    </script>
+    <script>
+        var key = "AIzaSyDSm_SYTwjllv-TW_SJ4X0i8WEF9jJpOqg";
+        var baseurl = "https://maps.googleapis.com";
+        function currentLocation() {
+            var location=user_latitude1+','+user_longitude1;
+            /*$.ajax({
+                url: baseurl + "/maps/api/geocode/json?address="+location+"&key=" + key,
+                type: 'GET',
+                dataType: 'json',
+                contentType:"application/json",
+                success: function (data) {
+                    console.log(data["results"][0]["geometry"]["location"]);
 
+                }
+            });*/
+
+            $.ajax({
+                dataType: "json",
+                url:  baseurl + "/maps/api/geocode/json?latlng="+location+"&key=" + key,
+                success: function (data) {
+                    document.getElementById("amt_needed1").value=data["results"][1].formatted_address
+                }
+            });
+
+        }
+    </script>
     <!-- Bootstrap core JavaScript -->
+    <script src="OrderLocation.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
