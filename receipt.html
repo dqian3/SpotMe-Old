@@ -70,14 +70,14 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Ron Daniels</td>
-                        <td>Evan Mays</td>
-                        <td>$5<br><span style="color: #2ecc71">Cash</span></td>
+                        <td class="deliverer">Ron Daniels</td>
+                        <td class="customer">Evan Mays</td>
+                        <td>$<span id="cashPrice">5</span><br><span style="color: #2ecc71">Cash</span></td>
                       </tr>
                       <tr>
-                        <td>Evan Mays</td>
-                        <td>Ron Daniels</td>
-                        <td>$6<br><span style="color: #3498db">Bank</span></td>
+                        <td class="customer">Evan Mays</td>
+                        <td class="deliverer">Ron Daniels</td>
+                        <td>$<span id="bankTransferPrice">6</span><br><span style="color: #3498db">Bank</span></td>
                       </tr>
                     </tbody>
                 </table>
@@ -98,6 +98,7 @@
 </div>
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="receipt.js"></script>
 <script src="vendor/popper/popper.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
