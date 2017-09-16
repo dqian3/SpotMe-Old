@@ -21,6 +21,7 @@ function store_acc_id(id)
 {
 	var userId = firebase.auth().currentUser.uid;
 	firebase.database().ref('users/' + userId + "/acc_id").set(id);
+	window.location.href = "main.html";
 }
 
 function grabData()
