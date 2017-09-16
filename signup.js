@@ -51,21 +51,7 @@ function grabData()
 
 		register_customer(data);
 
-		// window.location.href = "main.html";
 	});
-		// promise.then(function() {
-	// 	var userId = firebase.auth().currentUser.uid;
-	// 	firebase.database().ref('users/' + userId).set({
-	// 		personal_info: data
-	// 	});
-
-	// 	register_customer(data);
-
-	// 	window.location.href = "main.html";
-	// });
-	// promise.catch(function(then) {
-
-	// });
 
 
 
