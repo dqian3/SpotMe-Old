@@ -85,20 +85,19 @@
     var x = document.getElementById("demo");
     var user_latitude1;
     var user_longitude1;
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-    }
     function showPosition(position) {
         user_latitude1=position.coords.latitude;
         user_longitude1=position.coords.longitude;
+        var location=user_latitude1+','+user_longitude1;
+        $.ajax({
+            dataType: "json",
+            url:  baseurl + "/maps/api/geocode/json?latlng="+location+"&key=" + key,
+            success: function (data) {
+                document.getElementById("amt_needed1").value=data["results"][1].formatted_address
+            }
+        });
     }
     function currentLocation() {
-        getLocation();
-        var location=user_latitude1+','+user_longitude1;
         /*$.ajax({
             url: baseurl + "/maps/api/geocode/json?address="+location+"&key=" + key,
             type: 'GET',
@@ -108,13 +107,13 @@
                 console.log(data["results"][0]["geometry"]["location"]);
             }
         });*/
-        $.ajax({
-            dataType: "json",
-            url:  baseurl + "/maps/api/geocode/json?latlng="+location+"&key=" + key,
-            success: function (data) {
-                document.getElementById("amt_needed1").value=data["results"][1].formatted_address
-            }
-        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        
+        
     }
 </script>
 <!-- Bootstrap core JavaScript -->
