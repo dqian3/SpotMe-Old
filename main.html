@@ -66,12 +66,10 @@
       </div>
     </nav>-->
     <script>
-    function goToOrder(e){
-      e.preventDefault();
+    function goToOrder(){
         window.location.href = "order.html";
     }
-    function goToMap(e){
-      e.preventDefault();
+    function goToMap(){
         window.location.href = "map.html";
     }
     </script>
@@ -89,8 +87,8 @@
           <br>
           <br>
           <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
-          <p><a class="btn btn-primary btn-lg" href="#" onclick="goToOrder(e)" role="button" style="width:80%">Cash</a></p>
-          <p><a class="btn btn-primary btn-blue btn-lg" href="#" onclick="goToMap(e)" role="button" style="width:80%">Give Money</a></p>
+          <p><a class="btn btn-primary btn-lg" href="#" onclick="goToOrder()" role="button" style="width:80%">Cash</a></p>
+          <p><a class="btn btn-primary btn-blue btn-lg" href="#" onclick="goToMap()" role="button" style="width:80%">Give Money</a></p>
         </div>
       </div>
     </div>
