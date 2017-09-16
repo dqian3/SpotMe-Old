@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <title>Distance Matrix service</title>
     <style>
         #right-panel {
@@ -40,6 +41,7 @@
     </style>
 </head>
 <body>
+
 <div id="right-panel">
     <div id="inputs">
         <pre>
@@ -54,6 +56,9 @@ var destinationB = {lat: 50.087, lng: 14.421};
     <div id="output"></div>
 </div>
 <div id="map"></div>
+<button class="navbar-toggler" style="left:20px; top:18px; position: absolute; color:white; font-size:20px; border:0px; background-color:transparent;"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+ <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+</button>
 <script src="Location.js"></script>
 <script>
     var uLat;
