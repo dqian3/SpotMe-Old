@@ -1,0 +1,63 @@
+<html>
+<body>
+
+
+<form id = "cust_input_info" action="/action_page.php" method="get">
+
+<!--Sign up form-->
+First name:<br>
+<input type="text" name="firstname" id="fname">
+<br>
+Last name:<br>
+<input type="text" name="lastname" id="lname">
+<br>
+<br>
+Street number:<br>
+<input type="text" name="streetnum" id="stnum">
+<br>
+Street name:<br>
+<input type="text" name="streetname" id="stname">
+<br>
+City:<br>
+<input type="text" name="city" id="city">
+<br>
+State:<br>
+<input type="text" name="state" id="state">
+<br>
+ZIP Code:<br>
+<input type="text" name="zip" id="zip">
+<br>
+<br>
+<!--INSERT PHOTO AS WELL-->
+<br>
+<br>
+<!--Banking Info-->
+	<!--maybe needed-->
+
+<!--Notifs-->
+Enable Notifications? <br>
+<input type="radio" name="notif" value="Yes"> Yes<br>
+<input type="radio" name="notif" value="No"> No<br>
+
+<br>
+
+<script src = "signup.js"> </script>
+<button onclick="grabData()">Submit</button>
+
+<br>
+
+<!--After submit button is clicked, but before we move to the next screen-->
+<!--Terms Agreement-->
+<!--Have a popup box with an explanation of the app and stuff-->
+	<!--this is within the popup-->
+    <!-- UNCOMMENT THIS LATER-->
+	<!-- 
+	<input type="radio" name="agreement" value="I fully understand the services of this app and agree to its terms and conditions"> I fully understand the services of this app and agree to its terms and conditions <br>
+	-->
+
+	<!-- only after the terms are agreed to do we move on to the next page--> 
+
+</form>
+
+</body>
+</html>
