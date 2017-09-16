@@ -8,6 +8,7 @@ var config = {
   };
 
 var userId;
+var otherId;
 var userType;
 
 firebase.initializeApp(config);
@@ -69,6 +70,7 @@ function userStatus(id) {
   					$("#info").show();
   					$("#pending").hide();
   					var delivererId = order.val().deliverer;
+  					otherId = delivererId;
 					getDelivererInfo(delivererId);
 					firebase.database().ref('/orders/' + userId).off();
   				}
@@ -87,19 +89,34 @@ function userStatus(id) {
 			//Get reciever's info
 			//DelUserId will switch to userId
 			firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
-			//DelUserId will switch to userId
-					var recieverID = deliverer.child(userId).val();
-					console.log("Receiver:" + recieverID);
-					getRecieverInfo(recieverID);
+				var recieverID = deliverer.child(userId).val();
+				console.log("Receiver:" + recieverID);
+				getRecieverInfo(recieverID);
 			});;
 		}
   });
 }
 
 function confirmedExchange() {
-
-
-
+	if (userType == "customer") {
+		firebase.database().ref('/orders/' + userId).update({recConfirm:true});
+		firebase.database().ref('/orders/' + userId).on("value", function(order) {
+			console.log(order.child("delConfirm").val());
+			if(order.child("delConfirm").val()) {
+				alert("confirmed");
+			}
+		});
+	}
+	if (userType == "deliverer") {
+		firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
+			firebase.database().ref('/orders/' + deliverer.val()[userId]).update({delConfirm:true});
+			firebase.database().ref('/orders/' + deliverer.val()[userId]).on("value", function(order) {
+				if(order.child("recConfirm").val()) {
+					alert("confirmed");
+				}
+			});
+		});
+	}
 }  
 
 
