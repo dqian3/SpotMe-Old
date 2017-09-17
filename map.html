@@ -16,7 +16,7 @@
     <link href="bootstrap-glyphs.css" rel="stylesheet">
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <title>Distance Matrix service</title>
+    <title>Cash Requests</title>
     <style>
         #right-panel {
             font-family: 'Roboto','sans-serif';
@@ -51,8 +51,15 @@
         }
     </style>
     <script>
+        var mapDisplayed = true;
         function goToMain(){
-            window.location.href = "main.html";
+            if (mapDisplayed) {
+                window.location.href = "main.html";
+            }
+            else {
+                $("#map").show();
+                $("#customer").hide();
+            }
         }
     </script>
 </head>
@@ -91,8 +98,6 @@
 
 
 //    firebase.database().update()//or set
-
-
     var origin1;
 
     function initMap() {
@@ -137,7 +142,8 @@
         	map: map,
         	icon: originIcon
         });
-
+        map.fitBounds(bounds.extend(origin1));
+        console.log(origin1);
 		for (var i = 0; i < loc_array.length; i++) {
 			var marker = new google.maps.Marker({
 				position: loc_array[i],
@@ -151,6 +157,7 @@
 				console.log(JSON.stringify(this.position));
 				console.log(this.user);
                 init_customer(this.user);
+                mapDisplayed = false;
                 $("#map").hide();
                 $("#customer").show();
 
@@ -167,12 +174,6 @@
 <script>
     document.ontouchmove = function(event){
         event.preventDefault();
-    }
-</script>
-
-<script>
-    function goToIndex(){
-        window.location.href = "main.html";
     }
 </script>
 
