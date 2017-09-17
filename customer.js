@@ -11,21 +11,22 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var destId = "4HRB2yLjjCbeeKQmMfodjIFSBc12" //Very important, set this to what the map selected
 var ETA = 5;
 
-firebase.database().ref('/users/' + destId).once('value').then(function(user) {
-	//Make this display properly instead of raw json.
-	console.log(JSON.stringify(user));
+function init_customer(id) {
+	destId = id;
+	firebase.database().ref('/users/' + destId).once('value').then(function(user) {
+		//Make this display properly instead of raw json.
+		console.log(JSON.stringify(user));
 
-	$("#name").text(user.child("personal_info").val().first_name + " " + user.child("personal_info").val().last_name);
+		$("#name").text(user.child("personal_info").val().first_name + " " + user.child("personal_info").val().last_name);
 
-	firebase.database().ref("orders/" + destId).once("value").then(function(order){
-		$("#amt_needed").val(order.val().amount_needed);
-		$("#dist").val(ETA); //Temporary, will be based on location later
+		firebase.database().ref("orders/" + destId).once("value").then(function(order){
+			$("#amt_needed").val(order.val().amount_needed);
+			$("#dist").val(ETA); //Temporary, will be based on location later
+		});
 	});
-});
-
+}
 
 function accept() {
 	var userId = firebase.auth().currentUser.uid;

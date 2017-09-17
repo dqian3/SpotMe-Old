@@ -2,15 +2,17 @@
 <html>
 <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 
+
+<script src = "customer.js"> </script>
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
     <link href="bootstrap-glyphs.css" rel="stylesheet">
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -55,22 +57,22 @@
     </script>
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
-    <div class="container">
-        <a class="navbar-brand" style="margin:0 auto; padding-top:18px" href="#">Cash Requests</a>
-        <button class="navbar-toggler" onclick = "goToMain()"style="left:8px; top:18px; position: absolute; color:white; font-size:20px; border:0px"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        </button>
-    </div>
-</nav>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style=>
+        <div class="container">
+            <a class="navbar-brand" style="margin:0 auto; padding-top:18px" href="#">Cash Requests</a>
+            <button class="navbar-toggler" onclick = "goToMain()"style="left:8px; top:18px; position: absolute; color:white; font-size:20px; border:0px"  type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          </button>
+      </div>
+  </nav>
 
-<div  id="right-panel" style="display: none">
+  <div  id="right-panel" style="display: none">
     <div id="inputs">
         <pre>
-var origin1=new google.maps.LatLng(uLat, uLng);
-var destinationA = new google.maps.LatLng(uLat, uLng);
-var destinationB = new google.maps.LatLng(uLat, uLng);
+            var origin1=new google.maps.LatLng(uLat, uLng);
+            var destinationA = new google.maps.LatLng(uLat, uLng);
+            var destinationB = new google.maps.LatLng(uLat, uLng);
         </pre>
     </div>
     <div>
@@ -80,17 +82,9 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
 </div>
 <div id="map"></div>
 
+<script src="Location.js"></script>
 
 <script>
-    var config = {
-        apiKey: "AIzaSyCUjMnWd8szLkDenWZV58BWfmRq0Sm7dMI",
-        authDomain: "spotme-a2502.firebaseapp.com",
-        databaseURL: "https://spotme-a2502.firebaseio.com",
-        projectId: "spotme-a2502",
-        storageBucket: "spotme-a2502.appspot.com",
-        messagingSenderId: "1041315357650"
-    };
-    firebase.initializeApp(config);
     var loc_array=[];
     var user_id_array=[];
     console.log('fes')
@@ -99,13 +93,8 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
 //    firebase.database().update()//or set
 
 
-    var uLat;
-    var uLng;
     var origin1;
-    function displayLoc(lat, long) {
-        uLat=lat;
-        uLng=long;
-    }
+
     function initMap() {
         firebase.database().ref("/orders/").once("value").then(function (snapshot) {
             console.log('li')
@@ -117,11 +106,13 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
                     console.log(user["location"]["lat"] + " " + user["location"]["long"]);
                 }
             }
-            moreMapInit()
+            getLocation();
         });
     }
 
-    function moreMapInit() {
+    function moreMapInit(uLat, uLng) {
+
+
         var bounds = new google.maps.LatLngBounds;
         origin1 = new google.maps.LatLng(uLat, uLng);
         console.log("origin1: ", origin1);
@@ -135,17 +126,16 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
         var destinationIcon = 'https://chart.googleapis.com/chart?' +
             'chst=d_map_pin_letter&chld=D|FF0000|000000';
         var originIcon = 'https://chart.googleapis.com/chart?' +
-            'chst=d_map_pin_letter&chld=O|FFFF00|000000';
+        	'chst=d_map_pin_letter&chld=O|FFFF00|000000';
         var map = new google.maps.Map(document.getElementById('map'), {
             center: origin1,
             zoom: 10
         });
 
-        console.log(JSON.stringify(origin1));
-
         var origin_marker = new google.maps.Marker({
         	position: origin1,
         	map: map,
+        	icon: originIcon
         });
 
 		for (var i = 0; i < loc_array.length; i++) {
@@ -160,6 +150,10 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
 			marker.addListener('click', function(){
 				console.log(JSON.stringify(this.position));
 				console.log(this.user);
+                init_customer(this.user);
+                $("#map").hide();
+                $("#customer").show();
+
 			});
 		}
 
@@ -167,10 +161,59 @@ var destinationB = new google.maps.LatLng(uLat, uLng);
 
 
 </script>
-<script src="Location.js"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR8NLmWg6YsgLwOua4QE83DI1WqxmlH0M&callback=initMap">
 </script>
+<script>
+    document.ontouchmove = function(event){
+        event.preventDefault();
+    }
+</script>
+
+<script>
+    function goToIndex(){
+        window.location.href = "main.html";
+    }
+</script>
+
+<!-- Page Content -->
+<div class="container" id = "customer" style="display: none">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <br>
+      <div style="width: 80%; margin: 0 auto" class="input-group">
+        <p id="name">
+            Personal info
+        </p>
+        <p> 
+        </div><br>
+        <div style="width: 80%; margin: 0 auto" class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" id="amt_needed" placeholder="Cash needed" aria-label="Amount (to the nearest dollar)" readonly>
+            <span class="input-group-addon">.00</span>
+        </div><br>
+        <div style="width: 80%; margin: 0 auto" class="input-group">
+            <input type="text" class="form-control" placeholder="Distance" id="dist" aria-describedby="basic-addon2" readonly>
+            <span class="input-group-addon">Minutes Away</span>
+        </div><br>
+        <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
+        <p><a class="btn btn-primary btn-lg" onclick="accept()" role="button" href="#" style="width:80%">Accept</a></p>
+    </div>
+</div>
+</div>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper/popper.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+</div>
 </body>
+
+
+
+
 </html>
 </script>

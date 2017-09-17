@@ -10,11 +10,10 @@ function getLocation() {
 
     return user_longitude + " " + user_latitude;
 }
-getLocation();
 function showPosition(position) {
     user_latitude=position.coords.latitude;
     user_longitude=position.coords.longitude;
-    displayLoc(user_latitude, user_longitude);
+    moreMapInit(user_latitude, user_longitude);
 
 
 }
