@@ -56,7 +56,7 @@ function grabData()
 		firebase.database().ref('users/' + userId).set({
 			personal_info: data
 		});
-
+		delete data.phonenumber;
 		register_customer(data);
 
 	});
