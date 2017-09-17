@@ -5,7 +5,7 @@ var config = {
     projectId: "spotme-a2502",
     storageBucket: "spotme-a2502.appspot.com",
     messagingSenderId: "1041315357650"
-  };
+};
 
 var userId;
 var userType;
@@ -83,7 +83,6 @@ function getMyInfo(myId, customer)
     }
     
     $("#receiptcontainer").show();
-    $("#pending").hide();
   });
 }
 
@@ -97,23 +96,14 @@ function userStatus(id) {
   		if (ordering) {
   			//on the money reciever's phone
   			userType = "customer";
-  			firebase.database().ref('/orders/' + userId).on("value", function(order) {
-  				if(order.child("started").val()) {
-  					$("#info").show();
-  					$("#pending").hide();
-  					var delivererId = order.val().deliverer;
+  			firebase.database().ref('/orders/' + userId).once("value").then(function(order) {
+  				var delivererId = order.val().deliverer;
 					getDelivererInfo(delivererId, userId);
-					firebase.database().ref('/orders/' + userId).off();
-  				}
-
   			});
 
 		}
 		else
 		{
-			$("#info").show();
-			$("#pending").hide();
-
 			//on the deliverer's phone
 			//DelUser (in this case)
 			userType = "deliverer";
@@ -123,7 +113,7 @@ function userStatus(id) {
 			//DelUserId will switch to userId
 					var recieverID = deliverer.child(userId).val();
 					console.log("Receiver:" + recieverID);
-					getRecieverInfo(recieverID, myId);
+					getRecieverInfo(recieverID, id);
 			});;
 		}
   });
