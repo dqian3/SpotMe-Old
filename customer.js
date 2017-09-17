@@ -11,19 +11,21 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var ETA = 5;
+var ETA = 0;
+function init_customer(id, position) {
 
-function init_customer(id) {
 	destId = id;
 	firebase.database().ref('/users/' + destId).once('value').then(function(user) {
 		//Make this display properly instead of raw json.
 		console.log(JSON.stringify(user));
 
-		$("#name").text(user.child("personal_info").val().first_name + " " + user.child("personal_info").val().last_name);
+        ETA = Math.ceil(getDistance(origin1, position)/100);
+
+        $("#name").text(user.child("personal_info").val().first_name + " " + user.child("personal_info").val().last_name);
 
 		firebase.database().ref("orders/" + destId).once("value").then(function(order){
 			$("#amt_needed").val(order.val().amount_needed);
-			$("#dist").val(ETA); //Temporary, will be based on location later
+			$("#dist").val(ETA);
 		});
 	});
 }

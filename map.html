@@ -75,7 +75,7 @@
       </div>
   </nav>
 
-  <div  id="right-panel">
+  <div  id="right-panel" style="display: none">
     <div id="inputs">
         <pre>
             var origin1=new google.maps.LatLng(uLat, uLng);
@@ -95,7 +95,19 @@
 <script>
     var loc_array=[];
     var user_id_array=[];
-    console.log('fes')
+    var rad = function(x){
+        return x*Math.PI/180;
+    }
+    var getDistance = function(p1, p2){
+        var R = 6378137;;
+        var dLat = rad(p2.lat()-p1.lat());
+        var dLong = rad(p2.lng()-p1.lng());
+        var a = Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(rad(p1.lat()))*Math.cos(rad(p2.lat()))*Math.sin(dLong/2)*Math.sin(dLong/2);
+        var c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R*c;
+        return d;
+    }
+
 
 
 //    firebase.database().update()//or set
@@ -107,6 +119,7 @@
             for (var user_id in snapshot.val()) {
                 if (snapshot.val().hasOwnProperty(user_id)) {
                     var user = snapshot.val()[user_id];
+                    if (user["started"]) continue; //If the order is taken hide it
                     loc_array.push([user["location"]["lat"], user["location"]["long"]]);
                     user_id_array.push(user_id);
                     console.log(user["location"]["lat"] + " " + user["location"]["long"]);
@@ -157,14 +170,27 @@
 			marker.addListener('click', function(){
 				console.log(JSON.stringify(this.position));
 				console.log(this.user);
-                init_customer(this.user);
+                init_customer(this.user, this.position);
                 mapDisplayed = false;
                 $("#map").hide();
                 $("#customer").show();
 
 			});
 		}
-
+        for (var i = 0; i < 1; i++) {
+            var results = response.rows[i].elements;
+            geocoder.geocode({'address': originList[i]},
+                showGeocodedAddressOnMap(false));
+            for (var j = 0; j < results.length; j++) {
+                geocoder.geocode({'address': destinationList[j]},
+                    showGeocodedAddressOnMap(true));
+                travel_info.push([destinationList[j], results[j].duration.text]);
+//                        outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
+//                            ': ' + results[j].distance.text + ' in ' +
+//                            results[j].duration.text + '<br>';
+            }
+        }
+        console.log(travel_info);
     }
 
 
