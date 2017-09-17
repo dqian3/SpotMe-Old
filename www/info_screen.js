@@ -69,7 +69,7 @@ function userStatus(id) {
   				if(order.child("started").val()) {
   					$("#info").show();
   					$("#pending").hide();
-  					$("#prof_pic").attr("https://api.hub.jhu.edu/factory/sites/default/files/styles/hub_medium/public/jay.jpg?itok=P2foVg1f", loc);
+  					$("#prof_pic").attr("src", "https://api.hub.jhu.edu/factory/sites/default/files/styles/hub_medium/public/jay.jpg?itok=P2foVg1f");
   					var delivererId = order.val().deliverer;
   					otherId = delivererId;
 
