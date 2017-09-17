@@ -40,7 +40,7 @@ function create_account(id) {
 
 }
 
-function transfer(to, from, amount) {
+function transfer_funds(to, from, amount, success, fail) {
 	// This is arbitrary
 	var request = {
 		medium: "balance",
@@ -56,8 +56,8 @@ function transfer(to, from, amount) {
 	    data: JSON.stringify(request),
 	    dataType: 'json',
 	    contentType:"application/json",
-	    success: function (data) {
-		}
+	    success: success,
+	    error: fail
     });	
 
 }

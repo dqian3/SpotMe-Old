@@ -8,7 +8,9 @@ var config = {
   };
 
 var userId;
+var userAcc;
 var otherId;
+var otherAcc;
 var userType;
 
 firebase.initializeApp(config);
@@ -28,8 +30,6 @@ function getRecieverInfo(rId)
   	var lname = snapshot.child("personal_info/last_name").val();
   	var phonenum = snapshot.child("personal_info/phonenumber").val();
 
-  	console.log("#2  " + fname +  " " + lname + "  " + phonenum);
-
   	$("#name").html(fname + " " + lname); 
   	$("#call").attr("href", "tel:"+phonenum);
   	$("#text").attr("href", "sms:"+phonenum);
@@ -43,9 +43,9 @@ function getDelivererInfo(dId)
   		var fname = snapshot.child("personal_info/first_name").val();
   		var lname = snapshot.child("personal_info/last_name").val();
   		var phonenum = snapshot.child("personal_info/phonenumber").val();
-  		
-  	  	console.log("#1  " + fname + '  ' + lname + "  " + phonenum);
 
+  		otherAcc = snapshot.child("acc_id").val();
+  		
 	  	$("#name").html(fname + " " + lname); 
 	  	$("#call").attr("href", "tel:"+phonenum);
 	  	$("#text").attr("href", "sms:"+phonenum);
@@ -57,7 +57,7 @@ function userStatus(id) {
 	userId = id;
 	firebase.database().ref('/users/' + userId).once("value").then(function(snapshot) {
   		var ordering = snapshot.child("ordering").val();
-   		console.log(ordering);
+  		userAcc = snapshot.child("acc_id").val();
 
   		if (ordering) {
   			//on the money reciever's phone
@@ -71,6 +71,7 @@ function userStatus(id) {
   					$("#pending").hide();
   					var delivererId = order.val().deliverer;
   					otherId = delivererId;
+
 					getDelivererInfo(delivererId);
 					firebase.database().ref('/orders/' + userId).off();
   				}
@@ -90,6 +91,7 @@ function userStatus(id) {
 			//DelUserId will switch to userId
 			firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
 				var recieverID = deliverer.child(userId).val();
+				otherId = recieverID;
 				console.log("Receiver:" + recieverID);
 				getRecieverInfo(recieverID);
 			});;
@@ -104,6 +106,12 @@ function confirmedExchange() {
 			console.log(order.child("delConfirm").val());
 			if(order.child("delConfirm").val()) {
 				alert("confirmed");
+				transfer_funds(otherAcc, userAcc, parseInt(order.child("amount_needed").val()), 
+				function (resp) {
+					console.log("Funds Transfered");
+				}, function (resp) {
+					console.log("Error");
+				});
 			}
 		});
 	}
