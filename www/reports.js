@@ -8,13 +8,32 @@ var config = {
   };
   firebase.initializeApp(config);
 
+var userId;
+var otherId;
+var isUserCust;
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+  	userId = firebase.auth().currentUser.uid;
+  	firebase.database().ref("users/" + userId).once("value").then(function(user) {
+  		if (user.child("ordering")) {
+  			firebase.database().ref("orders/" + userId).once("value").then(function(order) {
+  				otherId = order.child("deliverer").val();
+  				console.log(otherId);
+  			});
+  		} else {
+  			firebase.database().ref("deliverers/").once("value").then(function(cust) {
+  				otherId = cust.child(userId).val();
+  				console.log(otherId);
+  			});
+  		}
+  	});
 
-var userId= "4HRB2yLjjCbeeKQmMfodjIFSBc12"; ///these will change with implementation
-var reportedId= "SwUOBxSqBqgyYH4znoH23BbE8px1";//////^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  } else {
+  }
+});
 
 function fileReport(id_of_reported, id_of_reporter)
 {
-	console.log("im in");
 	var time = new Date;
 	var preferred;
 
@@ -48,19 +67,8 @@ function fileReport(id_of_reported, id_of_reporter)
 
 function getReportInfo()
 {
-	firebase.database().ref('/orders/' + userId).once("value").then(function(deliverer) {
-  		var delivererId = deliverer.val().deliverer;
-  		//delivererId, in this case, is the person being reported
-  		console.log(delivererId);
-		
-		firebase.database().ref('/deliverers/').once("value").then(function(deliverer) {
-  			var recieverID = deliverer.child(reportedId).val();
-  			//recieverId is the person reporting
-  			console.log(recieverID);
-  			fileReport(delivererId, recieverID);
-  		});
-  	});
-    window.location.href = 'main.html';
+	fileReport(otherId, userId);
+	window.location.href = 'main.html';
 }
 
 //getInfo(); ///remember to comment this out
