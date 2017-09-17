@@ -31,8 +31,8 @@ function getRecieverInfo(rId)
   	var phonenum = snapshot.child("personal_info/phonenumber").val();
 
   	$("#name").html(fname + " " + lname); 
-  	$("#call").attr("href", "tel:"+phonenum);
-  	$("#text").attr("href", "sms:"+phonenum);
+  	$("#call").attr("href", "tel://"+phonenum);
+  	$("#text").attr("href", "sms://"+phonenum);
   });
 }
 
