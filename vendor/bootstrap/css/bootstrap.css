@@ -403,7 +403,8 @@ h1, h2, h3, h4, h5, h6,
 
 h1, .h1 {
   font-size: 3rem/*2.5rem;*/;
-  font-family: Calibri
+  font-family: Calibri,
+
 }
 
 h2, .h2 {
@@ -1998,6 +1999,16 @@ fieldset[disabled] a.btn {
   background-color: #3498db;/*#007bff;*/
   border-color: #3498db/*007bff*/;
 }
+.btn-light-blue {
+  color: #fff;
+  background-color: #63b4ea;/*#007bff;*/
+  border-color: #63b4ea/*007bff*/;
+}
+.btn-white {
+  color: #2ecc71;
+  background-color: white;/*#007bff;*/
+  border-color: #ecf0f1/*007bff*/;
+}
 
 .btn-primary:hover {
   color: #fff;
@@ -2008,6 +2019,16 @@ fieldset[disabled] a.btn {
   color: #fff;
   background-color: #2980b9;/*#0069d9;*/
   border-color: #2980b9/*0062cc*/;
+}
+.btn-light-blue:hover {
+  color: #fff;
+  background-color: #63a2cc;/*#0069d9;*/
+  border-color: #63a2cc/*0062cc*/;
+}
+.btn-white:hover {
+  color: #2ecc71;
+  background-color: #ecf0f1;/*#0069d9;*/
+  border-color: #ecf0f1/*0062cc*/;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2030,6 +2051,18 @@ fieldset[disabled] a.btn {
   background-color: #2980b9/*#0069d9*/;
   background-image: none;
   border-color: #2980b9/*#0062cc*/;
+}
+.btn-light-blue:active, .btn-light-blue.active,
+.show > .btn-light-blue.dropdown-toggle {
+  background-color: #63a2cc/*#0069d9*/;
+  background-image: none;
+  border-color: #63a2cc/*#0062cc*/;
+}
+.btn-white:active, .btn-white.active,
+.show > .btn-white.dropdown-toggle {
+  background-color: #ecf0f1/*#0069d9*/;
+  background-image: none;
+  border-color: #ecf0f1/*#0062cc*/;
 }
 
 .btn-secondary {

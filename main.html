@@ -32,11 +32,11 @@
 
   </head>
   <script>
-  	document.ontouchmove = function(event){
+    document.ontouchmove = function(event){
     event.preventDefault();
 }
   </script>
-  <body style="background-color:white">
+  <body style="background-color:#2ecc71">
 
     <!-- Navigation 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -74,7 +74,7 @@
     }
     </script>
     <!-- Page Content -->
-    <div style="position: absolute; top:20px; left:8px; color:#34495e; font-size:20px; border:0px">
+    <div style="position: absolute; top:24px; left:24px; color:white; font-size:32px; border:0px">
       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     </div>
     <div class="container">
@@ -82,13 +82,15 @@
         <div class="col-lg-12 text-center">
           <br>
           <br>
-          <img width=150 src="Spotme Logo.png" />
-          <h1 class="mt-5">SpotMe</h1>
+          <div><img width=300 src="Spotme Logo White.png" /></div>
+          <!--<h1 class="mt-5" style="margin-top: 1.5rem">SpotMe</h1>-->
           <br>
           <br>
+          <br>
+          
           <!-- <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>-->
-          <p><a class="btn btn-primary btn-lg" href="#" onclick="goToOrder()" role="button" style="width:80%">Cash</a></p>
-          <p><a class="btn btn-primary btn-blue btn-lg" href="#" onclick="goToMap()" role="button" style="width:80%">Give Money</a></p>
+          <p><a class="btn btn-primary btn-lg btn-white" href="#" onclick="goToOrder()" role="button" style="width:80%">Get Cash</a></p>
+          <p><a class="btn btn-primary btn-light-blue btn-lg" href="#" onclick="goToMap()" role="button" style="width:80%">Provide Cash</a></p>
         </div>
       </div>
     </div>
