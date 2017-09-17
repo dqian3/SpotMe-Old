@@ -42,7 +42,8 @@ function fileReport(id_of_reported, id_of_reporter)
 	x.set( info	).then(function(){
 		console.log("success")
 	});
-	
+
+
 }
 
 function getReportInfo()
@@ -59,8 +60,7 @@ function getReportInfo()
   			fileReport(delivererId, recieverID);
   		});
   	});
-	window.location.href = "main.html";  	
-
+    window.location.href = 'main.html';
 }
 
 //getInfo(); ///remember to comment this out
