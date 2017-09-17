@@ -52,13 +52,16 @@ function grabData()
 	};
 
 	firebase.auth().createUserWithEmailAndPassword($("#email").val(), $("#pass").val()).then(function() {
-		var userId = firebase.auth().currentUser.uid;
-		firebase.database().ref('users/' + userId).set({
-			personal_info: data
-		});
-		delete data.phonenumber;
-		register_customer(data);
+		setTimeout(function() {
+			var userId = firebase.auth().currentUser.uid;
 
+			firebase.database().ref('users/' + userId).set({
+				personal_info: data
+			}).then (function (){
+				delete data.phonenumber;
+				register_customer(data);
+			});
+		}, 2000);
 	});
 
 
