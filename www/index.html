@@ -31,8 +31,17 @@
 
   </head>
   <script>
+  import "StatusBar" from "./node_modules/cordova-plugin-statusbar"
+  alert(StatusBar.isVisible)
+document.addEventListener("deviceready", yourCallbackFunction, false);
+function yourCallbackFunction(){
+    StatusBar.hide();
+    alert(StatusBar.isVisible)
+  }
+  
   	document.ontouchmove = function(event){
     event.preventDefault();
+}
 }
   </script>
   <body style="background-color:white">
