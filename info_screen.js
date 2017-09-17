@@ -105,12 +105,11 @@ function confirmedExchange() {
 		firebase.database().ref('/orders/' + userId).on("value", function(order) {
 			console.log(order.child("delConfirm").val());
 			if(order.child("delConfirm").val()) {
-				alert("confirmed");
 				transfer_funds(otherAcc, userAcc, parseInt(order.child("amount_needed").val()), 
 				function (resp) {
-					console.log("Funds Transfered");
+					window.location.href = "receipt.html";
 				}, function (resp) {
-					console.log("Error");
+					alert("Error in transferring funds");
 				});
 			}
 		});
@@ -120,7 +119,7 @@ function confirmedExchange() {
 			firebase.database().ref('/orders/' + deliverer.val()[userId]).update({delConfirm:true});
 			firebase.database().ref('/orders/' + deliverer.val()[userId]).on("value", function(order) {
 				if(order.child("recConfirm").val()) {
-					alert("confirmed");
+					window.location.href = "receipt.html";
 				}
 			});
 		});

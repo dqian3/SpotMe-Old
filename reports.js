@@ -59,8 +59,7 @@ function getReportInfo()
   			fileReport(delivererId, recieverID);
   		});
   	});
-
-  	
+	window.location.href = "main.html";  	
 
 }
 
